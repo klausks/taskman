@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/usr/src/app/
+      - /usr/src/app/node_modules
+    networks:
+      - taskman
+networks:
+      taskman:
+        driver: bridge
