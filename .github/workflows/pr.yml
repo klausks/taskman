@@ -7,10 +7,6 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
-    # env:
-    #   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-    #   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    #   AWS_DEFAULT_REGION: ${{ secrets.S3_BUCKET_REGION }}
 
     steps:
       - name: Checkout
@@ -22,13 +18,5 @@ jobs:
       - name: Test
         run: npm run test
 
-      # - name: Build the Docker image
-      #   run: docker build . --file Dockerfile --tag ${{ secrets.ECR_REPO }}
-
-      # - name: Push to ECR
-      #   run: |
-      #     aws ecr get-login-password --region ${{ secrets.S3_BUCKET_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPO }}
-      #     docker push ${{ secrets.ECR_REPO }}
-
-      # - name: Update task definition
-      #   run: aws ecs update-service --cluster ${{ secrets.ECS_CLUSTER }} --service ${{ secrets.ECS_SERVICE }} --force-new-deployment
+      - name: Build
+        run: npm run build
