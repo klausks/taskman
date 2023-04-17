@@ -8,12 +8,18 @@ import { encryptPassword } from '../util/encrypt-password.util';
 export class UsersService {
   constructor(private prisma: PrismaService) {}
   async create(createUserDto: CreateUserDto) {
-    const encryptedPassword = await encryptPassword(createUserDto.password)
-    
-    return this.prisma.user.create({
-      data: {...createUserDto, password: encryptedPassword}}).catch((err) => {
-        throw new HttpException('Já existe usuário com esse email', HttpStatus.BAD_REQUEST);
+    const encryptedPassword = await encryptPassword(createUserDto.password);
+
+    return this.prisma.user
+      .create({
+        data: { ...createUserDto, password: encryptedPassword },
       })
+      .catch(() => {
+        throw new HttpException(
+          'Já existe usuário com esse email',
+          HttpStatus.BAD_REQUEST,
+        );
+      });
   }
 
   findAll() {
@@ -45,7 +51,7 @@ export class UsersService {
     });
   }
 
-  emailExists(email:string): Promise<boolean> {
-    return this.findUserByEmail(email).then((user) => (!!user))
+  emailExists(email: string): Promise<boolean> {
+    return this.findUserByEmail(email).then((user) => !!user);
   }
 }
