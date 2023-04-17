@@ -10,10 +10,10 @@ async function bootstrap() {
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   const config = new DocumentBuilder()
-  .setTitle('Projeto Engenharia de software API')
-  .setDescription('')
-  .setVersion('0.0.1')
-  .build();
+    .setTitle('Projeto Engenharia de software API')
+    .setDescription('')
+    .setVersion('0.0.1')
+    .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger-ui', app, document);
 

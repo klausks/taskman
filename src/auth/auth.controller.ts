@@ -1,10 +1,14 @@
 import {
-  Body, Controller, Get, HttpCode, Post, Req, Res
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Req,
+  Res,
 } from '@nestjs/common';
 import { Response } from 'express';
-import {
-  ApiTags, ApiAcceptedResponse, ApiBody,
-} from '@nestjs/swagger';
+import { ApiTags, ApiAcceptedResponse, ApiBody } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { LoginResponse } from './dto/login-response.dto';
 import { LoginDto } from './dto/login.dto';
@@ -29,10 +33,16 @@ export class AuthController {
     description: 'The record has been accepted.',
     type: LoginResponse,
   })
-  async login(@Body() login:LoginDto, @Res() res: Response) {
-    const user = await this.authService.getAuthenticatedUser(login.email, login.password);
+  async login(@Body() login: LoginDto, @Res() res: Response) {
+    const user = await this.authService.getAuthenticatedUser(
+      login.email,
+      login.password,
+    );
     const authorization = this.authService.getJwtToken(user.id);
-    const cookie = this.authService.getCookieWithJwtToken(user.id, authorization);
+    const cookie = this.authService.getCookieWithJwtToken(
+      user.id,
+      authorization,
+    );
     res.setHeader('Set-Cookie', cookie);
     res.send({ authorization, user });
   }
